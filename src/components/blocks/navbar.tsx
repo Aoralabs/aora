@@ -4,16 +4,11 @@ import { useEffect, useState } from "react";
 
 import Link from "next/link";
 
-import { ChevronRight } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
-  NavigationMenuContent,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
 
@@ -27,7 +22,6 @@ const SECTION_IDS = ["como-funciona", "planes", "faq"];
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [activeSection, setActiveSection] = useState<string>("");
 
   useEffect(() => {
@@ -71,64 +65,22 @@ export const Navbar = () => {
         {/* Desktop Navigation */}
         <NavigationMenu className="max-lg:hidden">
           <NavigationMenuList>
-            {ITEMS.map((link) =>
-              link.dropdownItems ? (
-                <NavigationMenuItem key={link.label} className="">
-                  <NavigationMenuTrigger className="data-[state=open]:bg-accent/50 bg-transparent! px-1.5">
-                    {link.label}
-                  </NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <div className="w-[280px] p-4">
-                      <h3 className="mb-3 text-sm font-semibold">Servicios</h3>
-                      <ul className="space-y-1">
-                        {link.dropdownItems.map((item) => {
-                          const Icon = item.icon;
-                          return (
-                            <li key={item.title}>
-                              <NavigationMenuLink asChild>
-                                <Link
-                                  href={item.href}
-                                  className="group hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground flex items-center gap-3 rounded-md px-2 py-2 leading-none no-underline outline-hidden transition-colors select-none"
-                                >
-                                  {Icon && (
-                                    <Icon className="text-primary size-4 shrink-0" />
-                                  )}
-                                  <span className="text-sm font-medium">
-                                    {item.title}
-                                  </span>
-                                </Link>
-                              </NavigationMenuLink>
-                            </li>
-                          );
-                        })}
-                      </ul>
-                      <Link
-                        href="/servicios"
-                        className="text-muted-foreground hover:text-foreground mt-3 flex items-center gap-1 text-sm transition-colors"
-                      >
-                        Explorar todos los servicios
-                        <ArrowRight className="size-3" />
-                      </Link>
-                    </div>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
-              ) : (
-                <NavigationMenuItem key={link.label} className="">
-                  <Link
-                    href={link.href}
-                    className="relative px-2 py-1 text-sm font-medium transition-all hover:opacity-75"
-                  >
-                    {link.label}
-                    <span
-                      className={cn(
-                        "absolute -bottom-1 left-1/2 h-1 -translate-x-1/2 rounded-full bg-primary transition-all duration-300",
-                        activeSection === link.href ? "w-4" : "w-0",
-                      )}
-                    />
-                  </Link>
-                </NavigationMenuItem>
-              ),
-            )}
+            {ITEMS.map((link) => (
+              <NavigationMenuItem key={link.label}>
+                <Link
+                  href={link.href}
+                  className="relative px-2 py-1 text-sm font-medium transition-all hover:opacity-75"
+                >
+                  {link.label}
+                  <span
+                    className={cn(
+                      "absolute -bottom-1 left-1/2 h-1 -translate-x-1/2 rounded-full bg-primary transition-all duration-300",
+                      activeSection === link.href ? "w-4" : "w-0",
+                    )}
+                  />
+                </Link>
+              </NavigationMenuItem>
+            ))}
           </NavigationMenuList>
         </NavigationMenu>
 
@@ -174,76 +126,22 @@ export const Navbar = () => {
         )}
       >
         <nav className="divide-border flex flex-1 flex-col divide-y">
-          {ITEMS.map((link) =>
-            link.dropdownItems ? (
-              <div key={link.label} className="py-4 first:pt-0 last:pb-0">
-                <button
-                  onClick={() =>
-                    setOpenDropdown(
-                      openDropdown === link.label ? null : link.label,
-                    )
-                  }
-                  className="text-primary flex w-full items-center justify-between text-base font-medium"
-                >
-                  {link.label}
-                  <ChevronRight
-                    className={cn(
-                      "size-4 transition-transform duration-200",
-                      openDropdown === link.label ? "rotate-90" : "",
-                    )}
-                  />
-                </button>
-                <div
-                  className={cn(
-                    "overflow-hidden transition-all duration-300",
-                    openDropdown === link.label
-                      ? "mt-4 max-h-[1000px] opacity-100"
-                      : "max-h-0 opacity-0",
-                  )}
-                >
-                  <div className="bg-muted/50 space-y-1 rounded-lg p-4">
-                    {link.dropdownItems.map((item) => {
-                      const Icon = item.icon;
-                      return (
-                        <Link
-                          key={item.title}
-                          href={item.href}
-                          className="group hover:bg-accent flex items-center gap-3 rounded-md p-2 transition-colors"
-                          onClick={() => {
-                            setIsMenuOpen(false);
-                            setOpenDropdown(null);
-                          }}
-                        >
-                          {Icon && (
-                            <Icon className="text-primary size-4 shrink-0" />
-                          )}
-                          <span className="text-primary font-medium">
-                            {item.title}
-                          </span>
-                        </Link>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <Link
-                key={link.label}
-                href={link.href}
-                className="relative py-4 text-base font-medium transition-colors first:pt-0 last:pb-0 hover:opacity-75"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {link.label}
-                <span
-                  className={cn(
-                    "absolute bottom-3 left-0 h-1 rounded-full bg-primary transition-all duration-300",
-                    activeSection === link.href ? "w-4" : "w-0",
-                  )}
-                />
-              </Link>
-            ),
-          )}
-
+          {ITEMS.map((link) => (
+            <Link
+              key={link.label}
+              href={link.href}
+              className="relative py-4 text-base font-medium transition-colors first:pt-0 last:pb-0 hover:opacity-75"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              {link.label}
+              <span
+                className={cn(
+                  "absolute bottom-3 left-0 h-1 rounded-full bg-primary transition-all duration-300",
+                  activeSection === link.href ? "w-4" : "w-0",
+                )}
+              />
+            </Link>
+          ))}
         </nav>
       </div>
     </section>
