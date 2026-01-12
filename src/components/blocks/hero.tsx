@@ -1,102 +1,95 @@
 import Image from "next/image";
 
-import {
-  ArrowRight,
-  Blend,
-  ChartNoAxesColumn,
-  CircleDot,
-  Diamond,
-} from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
-import { DashedLine } from "@/components/dashed-line";
 import { Button } from "@/components/ui/button";
-
-const features = [
-  {
-    title: "Tailored workflows",
-    description: "Track progress across custom issue flows for your team.",
-    icon: CircleDot,
-  },
-  {
-    title: "Cross-team projects",
-    description: "Collaborate across teams and departments.",
-    icon: Blend,
-  },
-  {
-    title: "Milestones",
-    description: "Break projects down into concrete phases.",
-    icon: Diamond,
-  },
-  {
-    title: "Progress insights",
-    description: "Track scope, velocity, and progress over time.",
-    icon: ChartNoAxesColumn,
-  },
-];
 
 export const Hero = () => {
   return (
-    <section className="py-28 lg:py-32 lg:pt-44">
-      <div className="container flex flex-col justify-between gap-8 md:gap-14 lg:flex-row lg:gap-20">
-        {/* Left side - Main content */}
-        <div className="flex-1">
-          <h1 className="text-foreground max-w-160 text-3xl tracking-tight md:text-4xl lg:text-5xl xl:whitespace-nowrap">
-            Mainline Next.js template
+    <section className="relative py-28 lg:py-32 lg:pt-44">
+      {/* Dashed Top Fade Grid */}
+      <div
+        className="pointer-events-none absolute inset-0 z-0"
+        style={{
+          backgroundImage: `
+            linear-gradient(to right, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 1px, transparent 1px)
+          `,
+          backgroundSize: "20px 20px",
+          backgroundPosition: "0 0, 0 0",
+          maskImage: `
+            repeating-linear-gradient(
+              to right,
+              black 0px,
+              black 3px,
+              transparent 3px,
+              transparent 8px
+            ),
+            repeating-linear-gradient(
+              to bottom,
+              black 0px,
+              black 3px,
+              transparent 3px,
+              transparent 8px
+            ),
+            radial-gradient(ellipse 70% 60% at 50% 0%, #000 60%, transparent 100%)
+          `,
+          WebkitMaskImage: `
+            repeating-linear-gradient(
+              to right,
+              black 0px,
+              black 3px,
+              transparent 3px,
+              transparent 8px
+            ),
+            repeating-linear-gradient(
+              to bottom,
+              black 0px,
+              black 3px,
+              transparent 3px,
+              transparent 8px
+            ),
+            radial-gradient(ellipse 70% 60% at 50% 0%, #000 60%, transparent 100%)
+          `,
+          maskComposite: "intersect",
+          WebkitMaskComposite: "source-in",
+        }}
+      />
+      <div className="container relative z-10 flex flex-col items-center text-center">
+        {/* Main content - Centered */}
+        <div className="max-w-2xl">
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-muted/80 px-4 py-2 text-sm font-medium backdrop-blur-sm">
+            <span className="relative flex size-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"></span>
+              <span className="relative inline-flex size-2 rounded-full bg-green-500"></span>
+            </span>
+            <span>Comienza hoy</span>
+          </div>
+          <h1 className="text-foreground text-4xl tracking-tight md:text-5xl lg:text-6xl">
+            Software y automatización
+            <br />
+            por <em className="italic font-normal">suscripción</em>
           </h1>
 
-          <p className="text-muted-foreground text-1xl mt-5 md:text-3xl">
-            Mainline is an open-source website template built with shadcn/ui,
-            Tailwind 4 & Next.js
+          <p className="text-muted-foreground mt-5 text-lg">
+            Cancela en cualquier momento.
           </p>
 
-          <div className="mt-8 flex flex-wrap items-center gap-4 lg:flex-nowrap">
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
             <Button asChild>
-              <a href="https://github.com/shadcnblocks/mainline-nextjs-template">
-                Get template
-              </a>
+              <a href="#planes">Ver planes</a>
             </Button>
             <Button
               variant="outline"
               className="from-background h-auto gap-2 bg-linear-to-r to-transparent shadow-md"
               asChild
             >
-              <a
-                href="https://shadcnblocks.com"
-                className="max-w-56 truncate text-start md:max-w-none"
-              >
-                Built by shadcnblocks.com
+              <a href="#como-funciona">
+                Cómo funciona
                 <ArrowRight className="stroke-3" />
               </a>
             </Button>
           </div>
-        </div>
-
-        {/* Right side - Features */}
-        <div className="relative flex flex-1 flex-col justify-center space-y-5 max-lg:pt-10 lg:pl-10">
-          <DashedLine
-            orientation="vertical"
-            className="absolute top-0 left-0 max-lg:hidden"
-          />
-          <DashedLine
-            orientation="horizontal"
-            className="absolute top-0 lg:hidden"
-          />
-          {features.map((feature) => {
-            const Icon = feature.icon;
-            return (
-              <div key={feature.title} className="flex gap-2.5 lg:gap-5">
-                <Icon className="text-foreground mt-1 size-4 shrink-0 lg:size-5" />
-                <div>
-                  <h2 className="font-text text-foreground font-semibold">
-                    {feature.title}
-                  </h2>
-                  <p className="text-muted-foreground max-w-76 text-sm">
-                    {feature.description}
-                  </p>
-                </div>
-              </div>
-            );
-          })}
         </div>
       </div>
 

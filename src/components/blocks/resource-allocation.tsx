@@ -6,13 +6,13 @@ import { cn } from "@/lib/utils";
 
 const topItems = [
   {
-    title: "Reusable issue templates.",
+    title: "Portal de cliente.",
     description:
-      "Draft lightning-fast documents with our Smart Instructions and Templates.",
+      "Acceso a tu portal para gestionar solicitudes y ver avances.",
     images: [
       {
         src: "/resource-allocation/templates.webp",
-        alt: "Issue template interface",
+        alt: "Portal de cliente",
         width: 495,
         height: 186,
       },
@@ -22,37 +22,17 @@ const topItems = [
     fade: [""],
   },
   {
-    title: "Simplify your stack.",
-    description: "No more Confluence, SharePoint, or Microsoft Word.",
+    title: "Stack moderno.",
+    description: "Las mejores herramientas para resultados de alto nivel.",
     images: [
-      { src: "/logos/jira.svg", alt: "Jira logo", width: 48, height: 48 },
-      { src: "/logos/excel.svg", alt: "Excel logo", width: 48, height: 48 },
-      {
-        src: "/logos/notion.svg",
-        alt: "Notion logo",
-        width: 48,
-        height: 48,
-      },
-      { src: "/logos/word.svg", alt: "Word logo", width: 48, height: 48 },
-      {
-        src: "/logos/monday.svg",
-        alt: "Monday logo",
-        width: 48,
-        height: 48,
-      },
-      {
-        src: "/logos/drive.svg",
-        alt: "Google Drive logo",
-        width: 48,
-        height: 48,
-      },
-      {
-        src: "/logos/jira.svg",
-        alt: "Jira logo",
-        width: 48,
-        height: 48,
-      },
-      { src: "/logos/asana.svg", alt: "Asana logo", width: 48, height: 48 },
+      { src: "/logos/claude.svg", alt: "Claude logo", width: 48, height: 48 },
+      { src: "/logos/nextjs.svg", alt: "Next.js logo", width: 48, height: 48 },
+      { src: "/logos/supabase.svg", alt: "Supabase logo", width: 48, height: 48 },
+      { src: "/logos/expo.svg", alt: "Expo logo", width: 48, height: 48 },
+      { src: "/logos/vercel.svg", alt: "Vercel logo", width: 48, height: 48 },
+      { src: "/logos/firebase.svg", alt: "Firebase logo", width: 48, height: 48 },
+      { src: "/logos/gemini.svg", alt: "Gemini logo", width: 48, height: 48 },
+      { src: "/logos/github.svg", alt: "GitHub logo", width: 48, height: 48 },
     ],
     className:
       "flex-1 [&>.title-container]:mb-5 md:[&>.title-container]:mb-8 md:[&>.title-container]:translate-x-2 xl:[&>.title-container]:translate-x-4 [&>.title-container]:translate-x-0",
@@ -62,13 +42,13 @@ const topItems = [
 
 const bottomItems = [
   {
-    title: "Graveyard it.",
+    title: "Entregas rápidas.",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do.",
+      "Avances en días, no semanas. Velocidad sin sacrificar calidad.",
     images: [
       {
         src: "/resource-allocation/graveyard.webp",
-        alt: "Graveyard interface",
+        alt: "Entregas rápidas",
         width: 305,
         height: 280,
       },
@@ -78,13 +58,13 @@ const bottomItems = [
     fade: ["bottom"],
   },
   {
-    title: "Task discussions.",
+    title: "Canal directo.",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod.",
+      "Google Chat con tu equipo. Comunicación en tiempo real.",
     images: [
       {
         src: "/resource-allocation/discussions.webp",
-        alt: "Task discussions interface",
+        alt: "Canal directo",
         width: 320,
         height: 103,
       },
@@ -94,13 +74,13 @@ const bottomItems = [
     fade: [""],
   },
   {
-    title: "Notifications.",
+    title: "Revisiones incluidas.",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod.",
+      "Iteramos hasta que quedes satisfecho. Sin costos extra.",
     images: [
       {
         src: "/resource-allocation/notifications.webp",
-        alt: "Notifications interface",
+        alt: "Revisiones incluidas",
         width: 305,
         height: 280,
       },
@@ -119,7 +99,7 @@ export const ResourceAllocation = () => {
     >
       <div className="">
         <h2 className="container text-center text-3xl tracking-tight text-balance sm:text-4xl md:text-5xl lg:text-6xl">
-          Mainline your resource allocation and execution
+          Todo esto <em className="italic font-normal">incluido</em> en tu suscripción
         </h2>
 
         <div className="mt-8 md:mt-12 lg:mt-20">

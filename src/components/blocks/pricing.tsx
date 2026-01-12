@@ -6,45 +6,45 @@ import { Check } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
 
 const plans = [
   {
-    name: "Free",
-    monthlyPrice: "$0",
-    yearlyPrice: "$0",
-    description: "Free for everyone",
+    name: "Prueba piloto",
+    monthlyPrice: "Gratis",
+    yearlyPrice: "Gratis",
+    description: "Un pequeño entregable para que veas cómo trabajamos",
     features: [
-      "Unlimited members",
-      "2 teams",
-      "500 issues",
-      "Slack and Github integrations",
+      "Mini tarea de prueba",
+      "Sin compromiso",
+      "Conoce al equipo",
+      "Evalúa nuestra calidad",
     ],
   },
   {
-    name: "Startup",
-    monthlyPrice: "$8",
-    yearlyPrice: "$6",
+    name: "Pro",
+    monthlyPrice: "$999",
+    yearlyPrice: "$799",
+    description: "Para empresas que necesitan velocidad",
     features: [
-      "All free plan features and...",
-      "Mainline AI",
-      "Unlimited teams",
-      "Unlimited issues and file uploads",
-      "Mainline Insights",
-      "Admin roles",
+      "2 solicitudes activas a la vez",
+      "Entrega al día siguiente",
+      "Todo lo del Standard",
+      "Integraciones con IA",
+      "Canal de Google Chat dedicado",
+      "Llamadas semanales",
     ],
   },
   {
-    name: "Enterprise",
-    monthlyPrice: "$8",
-    yearlyPrice: "$6",
+    name: "Standard",
+    monthlyPrice: "$699",
+    yearlyPrice: "$559",
+    description: "Ideal para proyectos en crecimiento",
     features: [
-      "All free plan features and...",
-      "Mainline AI",
-      "Supermainline AGI",
-      "Free daily catered lunch",
-      "random HIPPA audits",
+      "1 solicitud activa a la vez",
+      "Entregas en 1-2 días",
+      "Desarrollo web y móvil",
+      "Automatizaciones",
     ],
   },
 ];
@@ -53,59 +53,79 @@ export const Pricing = ({ className }: { className?: string }) => {
   const [isAnnual, setIsAnnual] = useState(true);
 
   return (
-    <section className={cn("py-28 lg:py-32", className)}>
+    <section id="planes" className={cn("py-28 lg:py-32", className)}>
       <div className="container max-w-5xl">
         <div className="space-y-4 text-center">
           <h2 className="text-2xl tracking-tight md:text-4xl lg:text-5xl">
-            Pricing
+            Planes <em className="italic font-normal">simples</em>
           </h2>
           <p className="text-muted-foreground mx-auto max-w-xl leading-snug text-balance">
-            Use Mainline for free with your whole team. Upgrade to enable
-            unlimited issues, enhanced security controls, and additional
-            features.
+            Sin contratos largos, sin sorpresas. Elige el plan que mejor se adapte a tu negocio.
           </p>
         </div>
 
-        <div className="mt-8 grid items-start gap-5 text-start md:mt-12 md:grid-cols-3 lg:mt-20">
+        <div className="mt-8 flex flex-col items-center md:mt-12">
+          <div className="bg-muted inline-flex items-center rounded-full p-1">
+            <button
+              onClick={() => setIsAnnual(false)}
+              className={cn(
+                "rounded-full px-4 py-2 text-sm font-medium transition-colors",
+                !isAnnual ? "bg-background text-foreground shadow-sm" : "text-muted-foreground"
+              )}
+            >
+              Mensual
+            </button>
+            <button
+              onClick={() => setIsAnnual(true)}
+              className={cn(
+                "rounded-full px-4 py-2 text-sm font-medium transition-colors",
+                isAnnual ? "bg-background text-foreground shadow-sm" : "text-muted-foreground"
+              )}
+            >
+              Anual <span className="text-primary ml-1 text-xs">-20%</span>
+            </button>
+          </div>
+          <p className="text-muted-foreground mt-3 text-xs">Puedes pausar o cancelar cuando quieras</p>
+        </div>
+
+        <div className="mt-8 grid items-start gap-5 text-start md:grid-cols-3">
           {plans.map((plan) => (
             <Card
               key={plan.name}
               className={`${
-                plan.name === "Startup"
+                plan.name === "Pro"
                   ? "outline-primary origin-top outline-4"
                   : ""
               }`}
             >
               <CardContent className="flex flex-col gap-7 px-6 py-5">
                 <div className="space-y-2">
-                  <h3 className="text-foreground font-semibold">{plan.name}</h3>
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-foreground font-semibold">{plan.name}</h3>
+                    {plan.name === "Pro" && (
+                      <span className="bg-primary text-primary-foreground relative inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold shadow-lg shadow-primary/30">
+                        <svg className="size-3" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2Z" />
+                        </svg>
+                        IA
+                      </span>
+                    )}
+                  </div>
                   <div className="space-y-1">
                     <div className="text-muted-foreground text-lg font-medium">
-                      {isAnnual ? plan.yearlyPrice : plan.monthlyPrice}{" "}
-                      {plan.name !== "Free" && (
+                      {isAnnual ? plan.yearlyPrice : plan.monthlyPrice}
+                      {plan.name !== "Prueba piloto" && (
                         <span className="text-muted-foreground">
-                          per user/
-                          {isAnnual ? "year" : "month"}
+                          /mes
                         </span>
                       )}
                     </div>
                   </div>
                 </div>
 
-                {plan.name !== "Free" ? (
-                  <div className="flex items-center gap-2">
-                    <Switch
-                      checked={isAnnual}
-                      onCheckedChange={() => setIsAnnual(!isAnnual)}
-                      aria-label="Toggle annual billing"
-                    />
-                    <span className="text-sm font-medium">Billed annually</span>
-                  </div>
-                ) : (
-                  <span className="text-muted-foreground text-sm">
-                    {plan.description}
-                  </span>
-                )}
+                <span className="text-muted-foreground text-sm">
+                  {plan.description}
+                </span>
 
                 <div className="space-y-3">
                   {plan.features.map((feature) => (
@@ -121,9 +141,16 @@ export const Pricing = ({ className }: { className?: string }) => {
 
                 <Button
                   className="w-fit"
-                  variant={plan.name === "Startup" ? "default" : "outline"}
+                  variant={plan.name === "Pro" ? "default" : "outline"}
+                  asChild
                 >
-                  Get started
+                  {plan.name === "Prueba piloto" ? (
+                    <a href="https://calendar.app.google/mYAwC3EfiC3VkfyT7" target="_blank" rel="noopener noreferrer">
+                      Agendar llamada
+                    </a>
+                  ) : (
+                    <a href="#contacto">Comenzar</a>
+                  )}
                 </Button>
               </CardContent>
             </Card>

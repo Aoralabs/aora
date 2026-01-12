@@ -1,14 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 
-import { ChevronRight, Github } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 
-import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
@@ -21,50 +18,54 @@ import {
 import { cn } from "@/lib/utils";
 
 const ITEMS = [
-  {
-    label: "Features",
-    href: "#features",
-    dropdownItems: [
-      {
-        title: "Modern product teams",
-        href: "/#feature-modern-teams",
-        description:
-          "Mainline is built on the habits that make the best product teams successful",
-      },
-      {
-        title: "Resource Allocation",
-        href: "/#resource-allocation",
-        description: "Mainline your resource allocation and execution",
-      },
-    ],
-  },
-  { label: "About Us", href: "/about" },
-  { label: "Pricing", href: "/pricing" },
-  { label: "FAQ", href: "/faq" },
-  { label: "Contact", href: "/contact" },
+  { label: "¿Cómo funciona?", href: "#como-funciona" },
+  { label: "Planes", href: "#planes" },
+  { label: "FAQ", href: "#faq" },
 ];
+
+const SECTION_IDS = ["como-funciona", "planes", "faq"];
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-  const pathname = usePathname();
+  const [activeSection, setActiveSection] = useState<string>("");
+
+  useEffect(() => {
+    const observers: IntersectionObserver[] = [];
+
+    SECTION_IDS.forEach((id) => {
+      const element = document.getElementById(id);
+      if (element) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                setActiveSection(`#${id}`);
+              }
+            });
+          },
+          { rootMargin: "-50% 0px -50% 0px" }
+        );
+        observer.observe(element);
+        observers.push(observer);
+      }
+    });
+
+    return () => {
+      observers.forEach((observer) => observer.disconnect());
+    };
+  }, []);
 
   return (
     <section
       className={cn(
-        "bg-background/70 absolute left-1/2 z-50 w-[min(90%,700px)] -translate-x-1/2 rounded-4xl border backdrop-blur-md transition-all duration-300",
-        "top-5 lg:top-12",
+        "bg-background/70 fixed left-1/2 z-50 w-[min(90%,700px)] -translate-x-1/2 rounded-4xl border backdrop-blur-md transition-all duration-300",
+        "top-5 lg:top-6",
       )}
     >
       <div className="flex items-center justify-between px-6 py-3">
         <Link href="/" className="flex shrink-0 items-center gap-2">
-          <Image
-            src="/logo.svg"
-            alt="logo"
-            width={94}
-            height={18}
-            className="dark:invert"
-          />
+          <span className="text-xl font-bold text-white">Aora</span>
         </Link>
 
         {/* Desktop Navigation */}
@@ -77,39 +78,53 @@ export const Navbar = () => {
                     {link.label}
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <ul className="w-[400px] space-y-2 p-4">
-                      {link.dropdownItems.map((item) => (
-                        <li key={item.title}>
-                          <NavigationMenuLink asChild>
-                            <Link
-                              href={item.href}
-                              className="group hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground flex items-center gap-4 rounded-md p-3 leading-none no-underline outline-hidden transition-colors select-none"
-                            >
-                              <div className="space-y-1.5 transition-transform duration-300 group-hover:translate-x-1">
-                                <div className="text-sm leading-none font-medium">
-                                  {item.title}
-                                </div>
-                                <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
-                                  {item.description}
-                                </p>
-                              </div>
-                            </Link>
-                          </NavigationMenuLink>
-                        </li>
-                      ))}
-                    </ul>
+                    <div className="w-[280px] p-4">
+                      <h3 className="mb-3 text-sm font-semibold">Servicios</h3>
+                      <ul className="space-y-1">
+                        {link.dropdownItems.map((item) => {
+                          const Icon = item.icon;
+                          return (
+                            <li key={item.title}>
+                              <NavigationMenuLink asChild>
+                                <Link
+                                  href={item.href}
+                                  className="group hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground flex items-center gap-3 rounded-md px-2 py-2 leading-none no-underline outline-hidden transition-colors select-none"
+                                >
+                                  {Icon && (
+                                    <Icon className="text-primary size-4 shrink-0" />
+                                  )}
+                                  <span className="text-sm font-medium">
+                                    {item.title}
+                                  </span>
+                                </Link>
+                              </NavigationMenuLink>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                      <Link
+                        href="/servicios"
+                        className="text-muted-foreground hover:text-foreground mt-3 flex items-center gap-1 text-sm transition-colors"
+                      >
+                        Explorar todos los servicios
+                        <ArrowRight className="size-3" />
+                      </Link>
+                    </div>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
               ) : (
                 <NavigationMenuItem key={link.label} className="">
                   <Link
                     href={link.href}
-                    className={cn(
-                      "relative bg-transparent px-1.5 text-sm font-medium transition-opacity hover:opacity-75",
-                      pathname === link.href && "text-muted-foreground",
-                    )}
+                    className="relative px-2 py-1 text-sm font-medium transition-all hover:opacity-75"
                   >
                     {link.label}
+                    <span
+                      className={cn(
+                        "absolute -bottom-1 left-1/2 h-1 -translate-x-1/2 rounded-full bg-primary transition-all duration-300",
+                        activeSection === link.href ? "w-4" : "w-0",
+                      )}
+                    />
                   </Link>
                 </NavigationMenuItem>
               ),
@@ -117,21 +132,13 @@ export const Navbar = () => {
           </NavigationMenuList>
         </NavigationMenu>
 
-        {/* Auth Buttons */}
+        {/* Auth Buttons & Social */}
         <div className="flex items-center gap-2.5">
-          <ThemeToggle />
           <Link href="/login" className="max-lg:hidden">
             <Button variant="outline">
-              <span className="relative z-10">Login</span>
+              <span className="relative z-10">Ingresar</span>
             </Button>
           </Link>
-          <a
-            href="https://github.com/shadcnblocks/mainline-nextjs-template"
-            className="text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <Github className="size-4" />
-            <span className="sr-only">GitHub</span>
-          </a>
 
           {/* Hamburger Menu Button (Mobile Only) */}
           <button
@@ -194,28 +201,28 @@ export const Navbar = () => {
                       : "max-h-0 opacity-0",
                   )}
                 >
-                  <div className="bg-muted/50 space-y-3 rounded-lg p-4">
-                    {link.dropdownItems.map((item) => (
-                      <Link
-                        key={item.title}
-                        href={item.href}
-                        className="group hover:bg-accent block rounded-md p-2 transition-colors"
-                        onClick={() => {
-                          setIsMenuOpen(false);
-                          setOpenDropdown(null);
-                        }}
-                      >
-                        <div className="transition-transform duration-200 group-hover:translate-x-1">
-                          <div className="text-primary font-medium">
+                  <div className="bg-muted/50 space-y-1 rounded-lg p-4">
+                    {link.dropdownItems.map((item) => {
+                      const Icon = item.icon;
+                      return (
+                        <Link
+                          key={item.title}
+                          href={item.href}
+                          className="group hover:bg-accent flex items-center gap-3 rounded-md p-2 transition-colors"
+                          onClick={() => {
+                            setIsMenuOpen(false);
+                            setOpenDropdown(null);
+                          }}
+                        >
+                          {Icon && (
+                            <Icon className="text-primary size-4 shrink-0" />
+                          )}
+                          <span className="text-primary font-medium">
                             {item.title}
-                          </div>
-
-                          <p className="text-muted-foreground mt-1 text-sm">
-                            {item.description}
-                          </p>
-                        </div>
-                      </Link>
-                    ))}
+                          </span>
+                        </Link>
+                      );
+                    })}
                   </div>
                 </div>
               </div>
@@ -223,16 +230,20 @@ export const Navbar = () => {
               <Link
                 key={link.label}
                 href={link.href}
-                className={cn(
-                  "text-primary hover:text-primary/80 py-4 text-base font-medium transition-colors first:pt-0 last:pb-0",
-                  pathname === link.href && "text-muted-foreground",
-                )}
+                className="relative py-4 text-base font-medium transition-colors first:pt-0 last:pb-0 hover:opacity-75"
                 onClick={() => setIsMenuOpen(false)}
               >
                 {link.label}
+                <span
+                  className={cn(
+                    "absolute bottom-3 left-0 h-1 rounded-full bg-primary transition-all duration-300",
+                    activeSection === link.href ? "w-4" : "w-0",
+                  )}
+                />
               </Link>
             ),
           )}
+
         </nav>
       </div>
     </section>
