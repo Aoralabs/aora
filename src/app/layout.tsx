@@ -142,8 +142,7 @@ export default function RootLayout({
       <body className={`${dmSans.variable} ${inter.variable} antialiased`}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="light"
-          enableSystem
+          forcedTheme="dark"
           disableTransitionOnChange
         >
           <StyleGlideProvider />
