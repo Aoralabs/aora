@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -20,11 +21,21 @@ const ITEMS = [
 
 const SECTION_IDS = ["como-funciona", "planes", "faq"];
 
+const HIDDEN_ROUTES = ["/login", "/signup", "/client-portal"];
+
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>("");
+  const pathname = usePathname();
+  const isHidden = HIDDEN_ROUTES.includes(pathname);
 
   useEffect(() => {
+    // No activar observer si navbar está oculto o no estamos en home
+    if (isHidden || pathname !== "/") {
+      setActiveSection("");
+      return;
+    }
+
     const observers: IntersectionObserver[] = [];
 
     SECTION_IDS.forEach((id) => {
@@ -48,7 +59,12 @@ export const Navbar = () => {
     return () => {
       observers.forEach((observer) => observer.disconnect());
     };
-  }, []);
+  }, [pathname, isHidden]);
+
+  // Ocultar navbar en rutas específicas
+  if (isHidden) {
+    return null;
+  }
 
   return (
     <section

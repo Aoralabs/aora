@@ -1,10 +1,20 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import { ArrowUpRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 
+const HIDDEN_ROUTES = ["/login", "/signup", "/client-portal"];
+
 export function Footer() {
+  const pathname = usePathname();
+
+  if (HIDDEN_ROUTES.includes(pathname)) {
+    return null;
+  }
   const navigation = [
     { name: "¿Cómo funciona?", href: "#como-funciona" },
     { name: "Planes", href: "#planes" },

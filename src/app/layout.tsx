@@ -63,29 +63,25 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "Mainline - Modern Next.js Template",
-    template: "%s | Mainline",
+    default: "Aoralabs - Software por suscripción",
+    template: "%s | Aoralabs",
   },
   description:
-    "A modern Next.js template built with shadcn/ui, Tailwind & MDX. Open source - MIT License.",
+    "Software y automatización por suscripción. Desarrollo web, móvil e integraciones con IA. Cancela en cualquier momento.",
   keywords: [
+    "software por suscripción",
+    "desarrollo web",
+    "desarrollo móvil",
+    "automatización",
+    "inteligencia artificial",
+    "IA",
     "Next.js",
-    "nextjs template",
-    "nextjs theme",
-    "nextjs starter",
-    "shadcn template",
-    "shadcn theme",
-    "shadcn starter",
-    "tailwind template",
-    "tailwind theme",
-    "tailwind starter",
-    "mdx template",
-    "mdx theme",
-    "mdx starter",
+    "React",
+    "desarrollo ágil",
   ],
-  authors: [{ name: "shadcnblocks.com" }],
-  creator: "shadcnblocks.com",
-  publisher: "shadcnblocks.com",
+  authors: [{ name: "Aoralabs" }],
+  creator: "Aoralabs",
+  publisher: "Aoralabs",
   robots: {
     index: true,
     follow: true,
@@ -102,26 +98,25 @@ export const metadata: Metadata = {
     shortcut: [{ url: "/favicon/favicon.ico" }],
   },
   openGraph: {
-    title: "Mainline - Modern Next.js Template",
+    title: "Aoralabs - Software por suscripción",
     description:
-      "A modern Next.js template built with shadcn/ui, Tailwind & MDX. Open source - MIT License.",
-    siteName: "Mainline",
+      "Software y automatización por suscripción. Desarrollo web, móvil e integraciones con IA. Cancela en cualquier momento.",
+    siteName: "Aoralabs",
     images: [
       {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Mainline - Modern Next.js Template",
+        alt: "Aoralabs - Software por suscripción",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Mainline - Modern Next.js Template",
+    title: "Aoralabs - Software por suscripción",
     description:
-      "A modern Next.js template built with shadcn/ui, Tailwind & MDX. Open source - MIT License.",
+      "Software y automatización por suscripción. Desarrollo web, móvil e integraciones con IA. Cancela en cualquier momento.",
     images: ["/og-image.jpg"],
-    creator: "@ausrobdev",
   },
 };
 
