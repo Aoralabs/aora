@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -75,7 +76,7 @@ export const Navbar = () => {
     >
       <div className="flex items-center justify-between px-6 py-3">
         <Link href="/" className="flex shrink-0 items-center gap-2">
-          <span className="text-xl font-bold text-white">Aora</span>
+          <Image src="/logo-aoralabs.svg" alt="Aora Labs" width={120} height={28} />
         </Link>
 
         {/* Desktop Navigation */}

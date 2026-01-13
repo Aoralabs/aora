@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -132,9 +133,9 @@ export function Footer() {
       </nav>
 
       <div className="relative z-10 mt-10 w-full overflow-hidden md:mt-14 lg:mt-20">
-        <h2 className="text-center text-[15vw] font-bold leading-none tracking-tighter bg-gradient-to-b from-white to-white/20 bg-clip-text text-transparent">
-          Aora
-        </h2>
+        <div className="flex justify-center opacity-40 translate-y-0 md:translate-y-1/4">
+          <Image src="/logo-aoralabs.svg" alt="Aora Labs" width={1200} height={300} className="w-[95vw]" />
+        </div>
       </div>
     </footer>
   );
