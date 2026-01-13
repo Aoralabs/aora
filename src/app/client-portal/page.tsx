@@ -7,6 +7,7 @@ import { MessageCircle } from "lucide-react";
 import {
   ClientPortalNavbar,
   NavItem,
+  ViewMode,
 } from "@/components/blocks/client-portal-navbar";
 import { InboxView } from "@/components/client-portal/inbox-view";
 import { ProjectsView } from "@/components/client-portal/projects-view";
@@ -15,7 +16,7 @@ import { TeamsView } from "@/components/client-portal/teams-view";
 import { ViewsView } from "@/components/client-portal/views-view";
 import { Button } from "@/components/ui/button";
 
-const VIEWS: Record<NavItem, React.ComponentType> = {
+const VIEWS: Record<NavItem, React.ComponentType<{ viewMode: ViewMode }>> = {
   Proyectos: ProjectsView,
   Bandeja: InboxView,
   Solicitudes: RequestsView,
@@ -25,13 +26,21 @@ const VIEWS: Record<NavItem, React.ComponentType> = {
 
 export default function ClientPortal() {
   const [activeItem, setActiveItem] = useState<NavItem>("Proyectos");
+  const [viewMode, setViewMode] = useState<ViewMode>("demo");
 
   const ActiveView = VIEWS[activeItem];
 
   return (
     <div className="min-h-screen">
-      <ClientPortalNavbar activeItem={activeItem} onItemChange={setActiveItem} />
-      <ActiveView />
+      <ClientPortalNavbar
+        activeItem={activeItem}
+        onItemChange={setActiveItem}
+        viewMode={viewMode}
+        onViewModeChange={setViewMode}
+      />
+      <div className="py-[50px]">
+        <ActiveView viewMode={viewMode} />
+      </div>
 
       <Button
         size="icon"

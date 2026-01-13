@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 
 import * as LucideIcons from "lucide-react";
-import { LucideIcon } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
 // Lista de iconos comunes para mostrar por defecto
 const COMMON_ICONS = [
@@ -116,9 +116,10 @@ export function useIconPicker() {
   const [search, setSearch] = useState("");
 
   const icons = useMemo(() => {
+    const iconMap = LucideIcons as unknown as Record<string, LucideIcon>;
     const allIcons: IconEntry[] = COMMON_ICONS.map((name) => ({
       name,
-      Component: (LucideIcons as Record<string, LucideIcon>)[name],
+      Component: iconMap[name],
     })).filter((icon) => icon.Component);
 
     if (!search) return allIcons;
@@ -138,7 +139,8 @@ export function IconRenderer({
   icon: string;
   className?: string;
 }) {
-  const IconComponent = (LucideIcons as Record<string, LucideIcon>)[icon];
+  const iconMap = LucideIcons as unknown as Record<string, LucideIcon>;
+  const IconComponent = iconMap[icon];
 
   if (!IconComponent) {
     return <LucideIcons.HelpCircle className={className} />;

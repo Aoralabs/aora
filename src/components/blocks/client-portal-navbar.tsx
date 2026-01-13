@@ -1,20 +1,33 @@
 import Link from "next/link";
 
-import { Bell, Hexagon } from "lucide-react";
+import { Bell, Hexagon, Settings2 } from "lucide-react";
 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 
 export const NAV_ITEMS = ["Proyectos", "Bandeja", "Solicitudes", "Vistas", "Equipos"] as const;
 
 export type NavItem = (typeof NAV_ITEMS)[number];
+export type ViewMode = "empty" | "demo";
 
 interface ClientPortalNavbarProps {
   activeItem: NavItem;
   onItemChange: (item: NavItem) => void;
+  viewMode: ViewMode;
+  onViewModeChange: (mode: ViewMode) => void;
 }
 
-export function ClientPortalNavbar({ activeItem, onItemChange }: ClientPortalNavbarProps) {
-
+export function ClientPortalNavbar({
+  activeItem,
+  onItemChange,
+  viewMode,
+  onViewModeChange,
+}: ClientPortalNavbarProps) {
   return (
     <header className="relative border-b border-border bg-background">
       <div className="flex h-14 items-center justify-between px-6">
@@ -47,9 +60,34 @@ export function ClientPortalNavbar({ activeItem, onItemChange }: ClientPortalNav
           </nav>
         </div>
 
-        <button className="text-muted-foreground transition-colors hover:text-white">
-          <Bell className="size-5" />
-        </button>
+        <div className="flex items-center gap-3">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className="flex items-center gap-2 rounded-md border border-border px-3 py-1.5 text-sm text-muted-foreground transition-colors hover:text-white">
+                <Settings2 className="size-4" />
+                {viewMode === "empty" ? "Empty State" : "Demo"}
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem
+                onClick={() => onViewModeChange("empty")}
+                className={cn("cursor-pointer", viewMode === "empty" && "bg-muted")}
+              >
+                Empty State
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => onViewModeChange("demo")}
+                className={cn("cursor-pointer", viewMode === "demo" && "bg-muted")}
+              >
+                Demo
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          <button className="text-muted-foreground transition-colors hover:text-white">
+            <Bell className="size-5" />
+          </button>
+        </div>
       </div>
     </header>
   );

@@ -1,8 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { FolderOpen, Plus } from "lucide-react";
+
+import type { ViewMode } from "@/components/blocks/client-portal-navbar";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -29,15 +31,49 @@ interface Project {
   icon: string;
 }
 
+const MOCK_PROJECTS: Project[] = [
+  {
+    id: "1",
+    name: "Web App",
+    description: "Aplicación web principal",
+    createdAt: new Date("2024-01-05"),
+    status: "open",
+    icon: "Globe",
+  },
+  {
+    id: "2",
+    name: "E-commerce",
+    description: "Tienda en línea",
+    createdAt: new Date("2024-01-10"),
+    status: "open",
+    icon: "ShoppingCart",
+  },
+  {
+    id: "3",
+    name: "Mobile App",
+    description: "Aplicación móvil",
+    createdAt: new Date("2024-01-12"),
+    status: "open",
+    icon: "Smartphone",
+  },
+];
 
-export function ProjectsView() {
+interface ProjectsViewProps {
+  viewMode: ViewMode;
+}
+
+export function ProjectsView({ viewMode }: ProjectsViewProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [selectedIcon, setSelectedIcon] = useState("Folder");
-  const [projects, setProjects] = useState<Project[]>([]);
+  const [projects, setProjects] = useState<Project[]>(viewMode === "demo" ? MOCK_PROJECTS : []);
   const [activeTab, setActiveTab] = useState<ProjectStatus>("open");
   const { search, setSearch, icons } = useIconPicker();
+
+  useEffect(() => {
+    setProjects(viewMode === "demo" ? MOCK_PROJECTS : []);
+  }, [viewMode]);
 
   const filteredProjects = projects.filter((p) => p.status === activeTab);
 
