@@ -1,6 +1,7 @@
+import Image from "next/image";
 import Link from "next/link";
 
-import { Bell, Hexagon, Settings2 } from "lucide-react";
+import { Bell, Settings2 } from "lucide-react";
 
 import {
   DropdownMenu,
@@ -32,8 +33,13 @@ export function ClientPortalNavbar({
     <header className="relative border-b border-border bg-background">
       <div className="flex h-14 items-center justify-between px-6">
         <div className="flex items-center gap-6">
-          <Link href="/client-portal" className="text-white">
-            <Hexagon className="size-7" strokeWidth={2} />
+          <Link href="/client-portal">
+            <Image
+              src="/icon-aoralabs.svg"
+              alt="Aora Labs"
+              width={28}
+              height={28}
+            />
           </Link>
 
           <div className="h-14 w-px bg-border" />
