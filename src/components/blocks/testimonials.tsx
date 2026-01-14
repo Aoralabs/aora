@@ -40,7 +40,7 @@ export const Team = ({
 }) => {
   return (
     <>
-      <section className={cn("overflow-hidden py-28 lg:py-32", className)}>
+      <section className={cn("overflow-hidden pt-12 pb-28 lg:pt-16 lg:pb-32", className)}>
         <div className="container">
           <div className="space-y-4">
             <h2 className="text-2xl tracking-tight md:text-4xl lg:text-5xl">
